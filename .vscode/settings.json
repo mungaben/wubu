@@ -1,0 +1,5 @@
+{
+    "conventionalCommits.scopes": [
+        "stellar tester- generate keys, create account,check balance,send payamnets "
+    ]
+}
