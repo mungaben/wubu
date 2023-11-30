@@ -1,37 +1,16 @@
 import AccountBalance from '@/public/Helper/AccountBalances'
+import GetChallage from '@/public/Helper/Benkiko/Challage/GetChallege'
 import Main from '@/public/Helper/CreateAccount'
 import keyPairData from '@/public/Helper/KeysCreator'
 import sendPayment from '@/public/Helper/SendPaymnet'
 import { log } from 'console'
 import Image from 'next/image'
+import AuthChallagne from '../public/Helper/Benkiko/Challage/AuthChallage';
 
 
 
 export default async function Home() {
-  const {pair,publicKey,secretkey }=keyPairData
-  const KeyPairs = pair
-  console.log("keys parts",publicKey,secretkey);
 
-
-  const CreateAccount= await Main
-//  console.log("CreateAccount");
-
-//  const balance=await AccountBalance()
-//   console.log("balance",balance);
-
- 
-  const pymant = await sendPayment
-  .then((result:any) => {
-    console.log('Payment sent successfully');
-    return result;
-  })
-  .catch((error: any) => {
-    console.error('Failed to send payment', error);
-    return error;
-  });
-
-console.log("pymant", pymant);
- 
   
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
