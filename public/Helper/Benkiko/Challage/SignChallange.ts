@@ -9,15 +9,7 @@ let data = JSON.stringify({
   "client_account_signing_seed": ""
 });
 
-let config = {
-  method: 'post',
-  maxBodyLength: Infinity,
-  url: 'https://api.benkiko.io/v1/auth/sign',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  data: data
-};
+
 
 
 type SignChallageData={
@@ -30,6 +22,16 @@ type SignChallageData={
 
 
 const  GetDataFRomBenkikoSign= async (data:SignChallageData)=>{
+
+  let config = {
+    method: 'post',
+    maxBodyLength: Infinity,
+    url: 'https://api.benkiko.io/v1/auth/sign',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    data: data
+  };
     const SignChallage =await axios.request(config)
     .then((response) => {
         console.log(JSON.stringify(response.data));

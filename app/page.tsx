@@ -3,13 +3,37 @@ import GetChallage from '@/public/Helper/Benkiko/Challage/GetChallege'
 import Main from '@/public/Helper/CreateAccount'
 import keyPairData from '@/public/Helper/KeysCreator'
 import sendPayment from '@/public/Helper/SendPaymnet'
-import { log } from 'console'
+import { Console, log } from 'console'
 import Image from 'next/image'
 import AuthChallagne from '../public/Helper/Benkiko/Challage/AuthChallage';
+import GetDataFRomBenkikoSign from '@/public/Helper/Benkiko/Challage/SignChallange'
 
 
 
 export default async function Home() {
+  // console.log("auth challenge", await AuthChallagne);
+  // const seed = process.env.Client_account_signing_seed;
+
+  // // Add your variable declarations here
+  // const variable1 = "value1";
+  // const variable2 = "value2";
+
+  // const authData=await AuthChallagne?.then((data)=>{
+  //   return data.data?.transaction;
+  // }
+  // );
+
+
+
+  // const data = {
+  //   challenge_transaction_xdr: "3NjN1hhdGY0Q21NR1YxR0dXcW1kYTMxU0VidURIQ01nNjFMZ1RXUFdTAAAAAQAAAABjZmOuxEwlNjYgXCnOjAHTtTBvEhToUvrnoFwV+5cYQgAAAAoAAAAPd2ViX2F1dGhfZG9tYWluAAAAAAEAAAAOYXBpLmJlbmtpa28uaW8AAAAAAAAAAAAB+5cYQgAAAEBhAMOTDiLs/yQCuVbOWQ2XO52R0J95fLN7P8zIntCuxkqOQSTlMYhxaVsJ1bWefxdwzmsu/JDnLz/9HWhvNj4B",
+  //   client_account_signing_seed: seed?.toString() || "", // Provide a default value if seed is undefined
+  // };
+
+  // const AuthSignIn = await GetDataFRomBenkikoSign(data);
+
+  
+
 
   
   return (
@@ -48,6 +72,9 @@ export default async function Home() {
           height={37}
           priority
         />
+      </div>
+      <div>
+    
       </div>
 
       <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
