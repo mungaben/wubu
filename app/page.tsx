@@ -1,40 +1,8 @@
-import AccountBalance from '@/public/Helper/AccountBalances'
-import GetChallage from '@/public/Helper/Benkiko/Challage/GetChallege'
-import Main from '@/public/Helper/CreateAccount'
-import keyPairData from '@/public/Helper/KeysCreator'
-import sendPayment from '@/public/Helper/SendPaymnet'
-import { Console, log } from 'console'
-import Image from 'next/image'
-import AuthChallagne from '../public/Helper/Benkiko/Challage/AuthChallage';
-import GetDataFRomBenkikoSign from '@/public/Helper/Benkiko/Challage/SignChallange'
-
-
+import Image from "next/image";
+import CreateBenkikoAccount from '../Utils/CreateBenkikoAccount';
 
 export default async function Home() {
-  // console.log("auth challenge", await AuthChallagne);
-  // const seed = process.env.Client_account_signing_seed;
-
-  // // Add your variable declarations here
-  // const variable1 = "value1";
-  // const variable2 = "value2";
-
-  // const authData=await AuthChallagne?.then((data)=>{
-  //   return data.data?.transaction;
-  // }
-  // );
-
-
-
-  // const data = {
-  //   challenge_transaction_xdr: "3NjN1hhdGY0Q21NR1YxR0dXcW1kYTMxU0VidURIQ01nNjFMZ1RXUFdTAAAAAQAAAABjZmOuxEwlNjYgXCnOjAHTtTBvEhToUvrnoFwV+5cYQgAAAAoAAAAPd2ViX2F1dGhfZG9tYWluAAAAAAEAAAAOYXBpLmJlbmtpa28uaW8AAAAAAAAAAAAB+5cYQgAAAEBhAMOTDiLs/yQCuVbOWQ2XO52R0J95fLN7P8zIntCuxkqOQSTlMYhxaVsJ1bWefxdwzmsu/JDnLz/9HWhvNj4B",
-  //   client_account_signing_seed: seed?.toString() || "", // Provide a default value if seed is undefined
-  // };
-
-  // const AuthSignIn = await GetDataFRomBenkikoSign(data);
-
-  
-
-
+  console.log("Creating Benkiko Account", await CreateBenkikoAccount());
   
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -50,7 +18,7 @@ export default async function Home() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            By{' '}
+            By{" "}
             <Image
               src="/vercel.svg"
               alt="Vercel Logo"
@@ -73,9 +41,7 @@ export default async function Home() {
           priority
         />
       </div>
-      <div>
-    
-      </div>
+      <div></div>
 
       <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
         <a
@@ -85,7 +51,7 @@ export default async function Home() {
           rel="noopener noreferrer"
         >
           <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
+            Docs{" "}
             <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
               -&gt;
             </span>
@@ -102,7 +68,7 @@ export default async function Home() {
           rel="noopener noreferrer"
         >
           <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
+            Learn{" "}
             <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
               -&gt;
             </span>
@@ -119,7 +85,7 @@ export default async function Home() {
           rel="noopener noreferrer"
         >
           <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
+            Templates{" "}
             <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
               -&gt;
             </span>
@@ -136,7 +102,7 @@ export default async function Home() {
           rel="noopener noreferrer"
         >
           <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
+            Deploy{" "}
             <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
               -&gt;
             </span>
@@ -147,5 +113,5 @@ export default async function Home() {
         </a>
       </div>
     </main>
-  )
+  );
 }
