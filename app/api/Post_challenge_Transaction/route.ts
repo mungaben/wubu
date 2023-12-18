@@ -1,24 +1,36 @@
-import {
-  Get_challenge_transaction_validation,
-  Post_challenge_transaction,
-} from "@/Utils/GetAccessToken";
+import { cookies } from 'next/headers'
+import { NextApiRequest, NextApiResponse } from "next";
+import { Post_challenge_transaction } from "@/Utils/GetAccessToken";
+import { NextRequest, NextResponse } from 'next/server';
+
+export async function GET(res: NextRequest, req: NextResponse) {
+
+  const cookieStore = cookies()
+  let token;
+  const septokenCookie = cookieStore.get('septoken');
+  if (septokenCookie) {
+    token = septokenCookie.value;
+  }
 
 
-import { NextRequest, NextResponse } from "next/server";
+  // If the token doesn't exist or is expired, get a new one
+  if (!token) {
+    const Post_TTransaction = await Post_challenge_transaction();
 
-export async function GET(req: NextRequest, res: NextResponse) {
+    token = Post_TTransaction.data.token;
 
-  const Post_TTransaction = await Post_challenge_transaction();
-  console.log("====================================");
-  console.log("Post_TTransaction", Post_TTransaction.data);
-  console.log("====================================");
+    cookieStore.set('septoken', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: Post_TTransaction.data.expires_in,
+    });
+  }
 
   return NextResponse.json({
-    status: 200,
-    code: 200,
-    data: {
-      message: "success",
-    },
-    message: "success",
-  });
+    token
+
+  })
+
+
 }

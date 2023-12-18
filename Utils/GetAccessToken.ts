@@ -1,5 +1,3 @@
-import { ApiResponse } from "./CreateBenkikoAccount";
-
 
 
 const axios = require("axios");
@@ -9,9 +7,10 @@ const axios = require("axios");
 // get Client Account
 
 export const CLIENT_ACCOUNT = process.env.CLIENT_ACCOUNT!;
-const HOME_DOMAIN = process.env.HOME_DOMAIN!;
+export const HOME_DOMAIN = process.env.HOME_DOMAIN!;
 export const SIGNING_SEED = process.env.CLIENT_ACCOUNT_SIGNING_SEED!;
 export const BENKIKO_BASE = process.env.BENKIKO_BASE!;
+export const BENKIKO_BASE_LIVE = process.env.BENKIKO_BASE_LIVE!;
 
 if (!SIGNING_SEED) {
   throw new Error("Client_account_signing_seed is not set in the .env file");
@@ -88,6 +87,9 @@ export const Get_challenge_transaction = async () => {
       `${BENKIKO_BASE}/v1/auth/challenge?client_account=${CLIENT_ACCOUNT}&home_domain=benkiko.io`
     )
     .then((response: GetTransactionResponse) => {
+      console.log('====================================');
+      console.log('response in get challange transaction', response);
+      console.log('====================================');
       return response.data;
     })
     .catch((error: any) => {
@@ -145,7 +147,7 @@ export const Get_challenge_transaction_validation = async () => {
   }
 
 
-  
+
 
   return Sign_Transaction_Response.data.transaction;
 };
@@ -180,6 +182,10 @@ export const Post_challenge_transaction = async () => {
 
       throw new Error("Error occurred before sending the request:", error.message);
     }
-    return error.response as PostTransactionErrorResponse;
+
   }
 };
+
+
+
+
