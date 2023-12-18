@@ -1,9 +1,12 @@
 {
     "conventionalCommits.scopes": [
         "stellar tester- generate keys, create account,check balance,send payamnets ",
-        "Benkiko apis"
+        "Benkiko apis",
+        "sep-10 "
     ],
     "cSpell.words": [
-        "Challage"
+        "async",
+        "Challage",
+        "Inchallange"
     ]
 }

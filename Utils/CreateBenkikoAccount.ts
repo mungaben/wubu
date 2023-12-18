@@ -1,75 +1,92 @@
-const CreateUrl = "/v1/account/";
-
-const BaseUrl = process.env.Benkiko_TestNet;
 import axios from "axios";
-// const CreateAccountUrl = BaseUrl + CreateUrl;
-const CreateAccountUrl =" https://api.benkiko.io/v1/account"
-console.log("CreateAccountUrl", CreateAccountUrl);
+
+export const signInKey = process.env.Client_account_signing_seed;
+export const clientAccount = process.env.client_account;
+
+if (!signInKey) {
+  throw new Error("Client_account_signing_seed is not set in the .env file");
+} else if (!clientAccount) {
+  throw new Error("Client_account is not set in the .env file");
+}
+
+export type ApiResponse = {
+  status: string;
+  code: number;
+  data: {
+    transaction: string; // Base64-encoded transaction details
+    network_passphrase: string; // Network passphrase associated with the Stellar network
+  };
+  message: string;
+};
 
 
-// const axios = require("axios");
-// let data = JSON.stringify({
-//   username: "postmantest36",
-//   mnemonic:
-//     "voyage indoor run veteran pride clump seek best stage inflict shrug resource welcome sail lab advice glimpse office catalog nut box pilot jeans frozen",
-//   index: 0,
-//   language: "ENGLISH",
-//   home_domain: "benkiko.io",
-// });
 
-// let config = {
-//   method: "post",
-//   maxBodyLength: Infinity,
-//   url: CreateAccountUrl,
-//   headers: {
-//     "Content-Type": "application/json",
-//     Authorization: "Bearer " + process.env.Client_account,
-//   },
-//   data: data,
-// };
+export const Challange = () => {
+  const config = {
+    method: "get",
+    maxBodyLength: Infinity,
+    url: `https://api.benkiko.io/v1/auth/challenge?client_account=${clientAccount}&home_domain=benkiko.io`,
+    headers: {},
+  };
 
-// axios
-//   .request(config)
-//   .then((response:any) => {
-//     console.log(JSON.stringify(response.data));
-//   })
-//   .catch((error:any) => {
-//     console.log(error);
-//   });
+  return axios
+    .request(config)
+    .then((response) => {
+      const responseData: ApiResponse = response.data;
 
-  const CreateBenkikoAccount=async()=>{
-    let data = JSON.stringify({
-        username: "postmantest36",
-        mnemonic:
-          "voyage indoor run veteran pride clump seek best stage inflict shrug resource welcome sail lab advice glimpse office catalog nut box pilot jeans frozen",
-        index: 0,
-        language: "ENGLISH",
-        home_domain: "benkiko.io",
-      });
-      
-      let config = {
-        method: "post",
-        maxBodyLength: Infinity,
-        url: CreateAccountUrl,
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + process.env.Client_account_signing_seed,
+      return {
+        status: responseData.status,
+        code: responseData.code,
+        data: {
+          transaction: responseData.data.transaction,
+          network_passphrase: responseData.data.network_passphrase,
         },
-        data: data,
+        message: responseData.message,
       };
-      
-       const Response =axios
-        .request(config)
-        .then((response:any) => {
-          console.log(JSON.stringify(response.data));
-          console.log("response when posting ",response.data.status);
-          
-        })
-        .catch((error:any) => {
+    })
+    .catch((error: any) => {
+      console.log("response error", error);
+      throw error; // Propagate the error so it can be caught in the calling function
+    });
+};
 
-          console.log("error when posting ",error);
-        });
-        return Response;
+
+
+
+
+
+export const SignInchallange = async (challenge_transaction_xdr: string) => {
+  const data = JSON.stringify({
+    challenge_transaction_xdr: challenge_transaction_xdr,
+    client_account_signing_seed: signInKey,
+  });
+  console.log("data", data);
+  console.log("challenge_transaction_xdr", challenge_transaction_xdr);
+
+  const config = {
+    method: "post",
+    maxBodyLength: Infinity,
+    url: "https://api.benkiko.io/v1/auth/sign",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data: data,
+  };
+
+  try {
+    const response = await axios.request(config);
+    const responseData: ApiResponse = response.data;
+
+    return {
+      status: responseData.status,
+      code: responseData.code,
+      data: {
+        transaction: responseData.data.transaction,
+        network_passphrase: responseData.data.network_passphrase,
+      },
+      message: responseData.message,
+    };
+  } catch (error) {
+    throw error; // Propagate the error so it can be caught in the calling function
   }
-
-  export default  CreateBenkikoAccount;
+};

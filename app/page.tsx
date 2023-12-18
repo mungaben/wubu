@@ -1,9 +1,20 @@
 import Image from "next/image";
-import CreateBenkikoAccount from '../Utils/CreateBenkikoAccount';
-
+import { ApiResponse,Challange, SignInchallange } from "@/Utils/CreateBenkikoAccount";
 export default async function Home() {
-  console.log("Creating Benkiko Account", await CreateBenkikoAccount());
-  
+
+
+  try {
+    const { status, code, data, message } = await Challange();
+    console.log("status:",status,"code:", code, "data:",data,"message:", message);
+
+    const challenge_transaction_xdr = data.transaction;
+    
+    
+  } catch (error) {
+    console.error('Failed to get challenge', error);
+  }
+
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
