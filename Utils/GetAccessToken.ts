@@ -1,5 +1,5 @@
 import { ApiResponse } from "./CreateBenkikoAccount";
-import StellarSdk from 'stellar-sdk';
+
 
 
 const axios = require("axios");
@@ -117,7 +117,7 @@ export const Sign_challenge_transaction = async (TRANSACTION_XDR: string) => {
         try {
           errorResponse = JSON.parse(error.message);
         } catch (parseError) {
-          console.error("Failed to sign transaction ", error.message);
+
           throw new Error("Failed to sign transaction");
         }
         // You can further handle or process this error response as needed
@@ -143,58 +143,12 @@ export const Get_challenge_transaction_validation = async () => {
   if (Sign_Transaction_Response.code !== 200) {
     throw new Error("Sign challenge transaction failed");
   }
-  console.log('====================================');
-  console.log("sign Transaction", Sign_Transaction_Response.data.transaction);
-  console.log('====================================');
 
-  const transaction = new StellarSdk.Transaction(Sign_Transaction_Response.data.transaction, StellarSdk.Networks.TESTNET);
 
-  console.log(transaction.signatures);
+  
 
   return Sign_Transaction_Response.data.transaction;
 };
-
-// final step in the SEP-10 authentication flow
-// the signed challenge transaction is sent to the server to be verified and a token is returned
-// export const Post_challenge_transaction = async () => {
-//   const SIGNED_XDR: string = await Get_challenge_transaction_validation();
-//   if (!SIGNED_XDR) {
-//     throw new Error("Signed XDR is not set");
-//   }
-
-//   let data = JSON.stringify({
-//     signed_challenge_transaction_xdr: SIGNED_XDR,
-//   });
-
-//   const Post_TTransaction = axios
-//     .post(`${BENKIKO_BASE}/v1/auth/token`, data, {
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//     })
-//     .then((response: PostTransactionResponse) => {
-
-//       return response.data;
-//     })
-//     .catch((error: any) => {
-//       if (error.response) {
-//         // The request was made and the server responded with a status code
-//         console.log('Server responded with status:', error.response.status);
-//         console.log('Error message:', error.response.data.message);
-//         // Handle the error based on the response data
-//       } else if (error.request) {
-//         // The request was made but no response was received
-//         console.log('No response received');
-//         // Handle this case accordingly
-//       } else {
-//         // Something happened in setting up the request
-//         console.log('Error occurred before sending the request:', error.message);
-//         // Handle this case accordingly
-//       }
-//     });
-
-//   return Post_TTransaction;
-// };
 
 
 export const Post_challenge_transaction = async () => {
@@ -202,56 +156,6 @@ export const Post_challenge_transaction = async () => {
   if (!SIGNED_XDR) {
     throw new Error("Signed XDR is not set");
   }
-
-  const transaction = new StellarSdk.Transaction(SIGNED_XDR, StellarSdk.Networks.TESTNET);
-
-  console.log("in post challange", transaction.signatures);
-
-
-  const publicKeys = transaction.operations.map((operation:any ) => operation.source);
-
-  console.log("public keys ",publicKeys);
-
-
-  // confirm that the transaction is valid with sdk
-
-  const xdrString = SIGNED_XDR// your XDR string
-  const publicKey1 = publicKeys[0]; // replace with your actual public key
-  const publicKey2 = publicKeys[1]; // replace with your actual public key
-
-  // const transaction = new StellarSdk.Transaction(xdrString, StellarSdk.Networks.TESTNET);
-
-  // Get the transaction hash that the signatures are signing
-  const txHash = transaction.hash();
-
-  // Create keypair instances for the signers
-  const keypair1 = StellarSdk.Keypair.fromPublicKey(publicKey1);
-  const keypair2 = StellarSdk.Keypair.fromPublicKey(publicKey2);
-
-  // Verify the signatures
-  let allSignaturesValid = true;
-  transaction.signatures.forEach((signature:any) => {
-    const signatureValid = keypair1.verify(txHash, signature.signature());
-
-    if (!signatureValid) {
-      allSignaturesValid = false;
-    }
-  });
-
-  if (allSignaturesValid) {
-    console.log("All signatures on the transaction are valid.");
-  } else {
-    console.log("One or more signatures on the transaction are not valid.");
-  }
-
-
-
-
-
-
-
-
-
 
 
   const data = JSON.stringify({
@@ -265,15 +169,16 @@ export const Post_challenge_transaction = async () => {
     return response.data as PostTransactionResponse;
   } catch (error: any) {
     if (error.response) {
-      console.log('Server responded with status:', error.response.status);
-      console.log('Error message:', error.response.data.message);
-      // Handle the error based on the response data
+
+      throw new Error("Error message:", error.response.data.message);
+
     } else if (error.request) {
-      console.log('No response received');
-      // Handle this case accordingly
+
+      throw new Error("No response received");
+
     } else {
-      console.log('Error occurred before sending the request:', error.message);
-      // Handle this case accordingly
+
+      throw new Error("Error occurred before sending the request:", error.message);
     }
     return error.response as PostTransactionErrorResponse;
   }
