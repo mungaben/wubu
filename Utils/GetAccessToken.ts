@@ -87,9 +87,7 @@ export const Get_challenge_transaction = async () => {
       `${BENKIKO_BASE}/v1/auth/challenge?client_account=${CLIENT_ACCOUNT}&home_domain=benkiko.io`
     )
     .then((response: GetTransactionResponse) => {
-      console.log('====================================');
-      console.log('response in get challange transaction', response);
-      console.log('====================================');
+    
       return response.data;
     })
     .catch((error: any) => {

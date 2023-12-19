@@ -49,29 +49,30 @@ export type ResponseType = {
 
 
 
-
-export const Create_stellar_account = async (ACCESS_TOKEN: any) => {
+export const Create_stellar_account = async (ACCESS_TOKEN:string) => {
+    if (!ACCESS_TOKEN) {
+        throw new Error("ACCESS_TOKEN is not set ");
+    }
  
     const CreateAccount = axios
         .post(
-            `${BENKIKO_BASE}/v1/account'`,
+            `${BENKIKO_BASE}/v1/account`,
             {
-                username: "postmantest3",
-                mnemonic: "voyage indoor run veteran pride clump seek best stage inflict shrug resource welcome sail lab advice glimpse office catalog nut box pilot jeans frozen",
+                username: "postmantest36",
+                mnemonic: "voyage indaar run veteran pride clump seek best stage inflict shrug resource welcome sail lab advice glimpse office catalog nut box pilot jeans frozen",
                 index: 0,
                 language: "ENGLISH",
-                home_domain: HOME_DOMAIN,
+                home_domain: "benkiko.io",
             },
             {
                 headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${ACCESS_TOKEN}`,
+                    Authorization: `Bearer  ${ACCESS_TOKEN}`,
                 },
             }
         )
         .then((response: AxiosResponse<ResponseType>) => {
             console.log('====================================');
-            console.log('response in get challange transaction', response);
+            console.log('response in', response);
             console.log('====================================');
             return response.data as ResponseType;
         })
@@ -79,19 +80,16 @@ export const Create_stellar_account = async (ACCESS_TOKEN: any) => {
             if (axios.isAxiosError(error)) {
                 const serverError = error as AxiosError<ErrorResponse>;
                 if (serverError && serverError.response) {
-                    // console.error('Server responded with status code', serverError.response.status);
-                    console.error('Response data:', serverError.response.data);
-
-                    return serverError.response.data;
+                    // console.error('Response data:', serverError.response.data);
+                    console.error('Response status:', serverError.response.status);
+                    // console.error('Response headers:', serverError.response.headers);
+                    // throw serverError;
                 }
             } else {
-
-                console.error('An error occurred in creating account:');
-                return error;
+                console.error('An error occurred in creating account:', error.message);
+                // throw error;
             }
         });
 
     return CreateAccount;
 }
-
-
