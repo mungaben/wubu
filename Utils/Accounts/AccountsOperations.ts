@@ -2,6 +2,7 @@
 
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { BENKIKO_BASE, HOME_DOMAIN,BENKIKO_BASE_LIVE } from "../GetAccessToken";
+import { generateMnemonic } from "./Generatemnemonic";
 
 
 
@@ -53,20 +54,28 @@ export const Create_stellar_account = async (ACCESS_TOKEN:string) => {
     if (!ACCESS_TOKEN) {
         throw new Error("ACCESS_TOKEN is not set ");
     }
+
+    const MnemonicComb= generateMnemonic();
+    // console.log('====================================');
+    // console.log('MnemonicComb', MnemonicComb);
+    // console.log('====================================');
+    if (!MnemonicComb) {
+        throw new Error("MnemonicComb is not set ");
+    }
  
     const CreateAccount = axios
         .post(
             `${BENKIKO_BASE}/v1/account`,
             {
-                username: "postmantest36",
-                mnemonic: "voyage indaar run veteran pride clump seek best stage inflict shrug resource welcome sail lab advice glimpse office catalog nut box pilot jeans frozen",
-                index: 0,
+                username: "ken",
+                mnemonic: MnemonicComb,
                 language: "ENGLISH",
                 home_domain: "benkiko.io",
             },
             {
                 headers: {
                     Authorization: `Bearer  ${ACCESS_TOKEN}`,
+                    "Access-Control-Allow-Origin": "*"
                 },
             }
         )
