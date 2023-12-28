@@ -14,7 +14,8 @@ export const generateMnemonic = async () => {
 
     try {
         const response: AxiosResponse = await axios.post(url, data, { headers });
-        console.log(response.data);
+        // console.log(response.data);
+        return response?.data?.data?.mnemonic;
     } catch (error) {
         console.error(error);
     }

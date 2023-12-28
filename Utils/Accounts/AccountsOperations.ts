@@ -75,7 +75,6 @@ export const Create_stellar_account = async (ACCESS_TOKEN:string) => {
             {
                 headers: {
                     Authorization: `Bearer  ${ACCESS_TOKEN}`,
-                    "Access-Control-Allow-Origin": "*"
                 },
             }
         )
@@ -102,3 +101,41 @@ export const Create_stellar_account = async (ACCESS_TOKEN:string) => {
 
     return CreateAccount;
 }
+
+
+
+
+// "energy swift machine ivory wall giant affair stomach impose elder drive bicycle enroll garment wagon hurdle angry pause resource forest young odor life pepper",
+
+
+export const createAccount = async (token:string) => {
+    const MnemonicComb= await  generateMnemonic();
+    console.log('====================================');
+    console.log(typeof MnemonicComb, MnemonicComb ,BENKIKO_BASE);
+    console.log('====================================');
+    const url = `${BENKIKO_BASE}/v1/account`;
+    // const CSRFToken = 'c4IOAkPsIOkbWGN2YIPY6W0wuiF1oGRT9XPPei9ckJaaOl5PdgGmuip5mcwOb8kJ';
+    // const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2FwaS5iZW5raWtvLmlvL2F1dGgiLCJzdWIiOiJHQlNQRVBBT1pNNFE2NU1IT1M0WjVOS1k1NUhUWFpFRFFFVEtDUExFNEJDNFRCWVhGUlRaSVlTRiIsImlhdCI6MTcwMzc5NDA5NywiZXhwIjoxNzAzODgwNDk3LCJqdGkiOiJkYTBiNmZmYzg2NzY1OTMyZDdkNmYxZTVhMmRkYmQwNDVjODA2NTg5NDFkM2U2MjYxZDcwNTA2NGQ1NGZmNWJlIn0.UNVRI8ykH6HcfFzJUWzrHtqt_l10GNYP3u761LXNoJs';
+    const data = {
+        username: "benswift8511345678",
+        mnemonic:  MnemonicComb.toString(),
+        index: 0,
+        language: "ENGLISH",
+        home_domain: "benkiko.io"
+    };
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+        // 'X-CSRFTOKEN': CSRFToken
+    };
+
+    try {
+        const response: AxiosResponse = await axios.post(url, data, { headers });
+        // console.log(response.data);
+        return response.data;   
+    } catch (error) {
+        // console.error(error);
+        return error;
+    }
+};
+
