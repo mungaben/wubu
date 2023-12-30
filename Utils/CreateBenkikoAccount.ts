@@ -1,7 +1,7 @@
 import axios from "axios";
 
-export const signInKey = process.env.Client_account_signing_seed;
-export const clientAccount = process.env.client_account;
+export const signInKey = process.env.CLIENT_ACCOUNT_SIGNING_SEED;
+export const clientAccount = process.env.CLIENT_ACCOUNT;
 
 if (!signInKey) {
   throw new Error("Client_account_signing_seed is not set in the .env file");

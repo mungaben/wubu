@@ -1,8 +1,9 @@
 // Create stellar account
 
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { BENKIKO_BASE, HOME_DOMAIN,BENKIKO_BASE_LIVE } from "../GetAccessToken";
+import { BENKIKO_BASE, HOME_DOMAIN,BENKIKO_BASE_LIVE,CLIENT_ACCOUNT } from "../GetAccessToken";
 import { generateMnemonic } from "./Generatemnemonic";
+
 
 
 
@@ -117,7 +118,7 @@ export const createAccount = async (token:string) => {
     // const CSRFToken = 'c4IOAkPsIOkbWGN2YIPY6W0wuiF1oGRT9XPPei9ckJaaOl5PdgGmuip5mcwOb8kJ';
     // const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2FwaS5iZW5raWtvLmlvL2F1dGgiLCJzdWIiOiJHQlNQRVBBT1pNNFE2NU1IT1M0WjVOS1k1NUhUWFpFRFFFVEtDUExFNEJDNFRCWVhGUlRaSVlTRiIsImlhdCI6MTcwMzc5NDA5NywiZXhwIjoxNzAzODgwNDk3LCJqdGkiOiJkYTBiNmZmYzg2NzY1OTMyZDdkNmYxZTVhMmRkYmQwNDVjODA2NTg5NDFkM2U2MjYxZDcwNTA2NGQ1NGZmNWJlIn0.UNVRI8ykH6HcfFzJUWzrHtqt_l10GNYP3u761LXNoJs';
     const data = {
-        username: "benswift8511345678",
+        username:  "postmantest364906",
         mnemonic:  MnemonicComb.toString(),
         index: 0,
         language: "ENGLISH",
@@ -138,4 +139,24 @@ export const createAccount = async (token:string) => {
         return error;
     }
 };
+
+
+
+export async function getAccountInfo(token:string) {
+    if (!token) {
+        throw new Error("ACCESS_TOKEN is not set ");
+    }
+    const url = `https://staging.api.benkiko.io/v1/account-info?account_id=${CLIENT_ACCOUNT}`;
+    const headers = {
+        'accept': 'application/json',
+        'Authorization': `Bearer ${token}`,
+    };
+
+    try {
+        const response: AxiosResponse = await axios.get(url, { headers });
+        return response.data;
+    } catch (error) {
+        return error;
+    }
+}
 

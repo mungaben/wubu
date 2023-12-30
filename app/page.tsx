@@ -3,16 +3,16 @@ import { ApiResponse,Challange, SignInchallange } from "@/Utils/CreateBenkikoAcc
 export default async function Home() {
 
 
-  try {
-    const { status, code, data, message } = await Challange();
-    console.log("status:",status,"code:", code, "data:",data,"message:", message);
+  // try {
+  //   const { status, code, data, message } = await Challange();
+  //   console.log("status:",status,"code:", code, "data:",data,"message:", message);
 
-    const challenge_transaction_xdr = data.transaction;
+  //   const challenge_transaction_xdr = data.transaction;
     
     
-  } catch (error) {
-    console.error('Failed to get challenge', error);
-  }
+  // } catch (error) {
+  //   console.error('Failed to get challenge', error);
+  // }
 
 
   return (
