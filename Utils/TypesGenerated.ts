@@ -74,3 +74,16 @@ export type ApiResponseGetAccountInfo = {
     data: AccountData;
     message: string;
 };
+
+
+
+export type TMergePostTransactionResponse = {
+    status: string;
+    code: number;
+    data: {
+        Successful: boolean;
+        Transaction_hash: string;
+        Created_at: string;
+    };
+    message: string;
+};

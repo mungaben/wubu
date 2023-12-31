@@ -1,4 +1,4 @@
-import { getAccountInfo } from "@/Utils/Accounts/AccountsOperations";
+import { changeTrust } from "@/Utils/Accounts/AccountsOperations";
 import { Post_challenge_transaction } from "@/Utils/GetAccessToken";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
@@ -7,9 +7,13 @@ import { NextRequest, NextResponse } from "next/server";
 
 
 
-export  async function GET (req:NextRequest,res:NextResponse){
-   
 
+export async function POST(req: NextRequest, res: NextResponse) {
+
+
+    const body = await req.json()
+
+    const { asset_code, limit, secret_key } = body
 
     const cookieStore = cookies()
     let token;
@@ -36,29 +40,36 @@ export  async function GET (req:NextRequest,res:NextResponse){
         })
     }
 
-    const accountInfo = await getAccountInfo(token);
-    if (accountInfo.code !== 200) {
-        return NextResponse.json({
-            status: accountInfo.status,
-            code: accountInfo.code,
-            data: {
-                error: accountInfo.data.error
-            },
-            message: {
-                message: accountInfo.message,
-                message2: "error not 200"
-            }
-        });
-    }
+
+
+   const chageTrustResponse= await changeTrust(token, asset_code, limit, secret_key);
+
+
+   if (chageTrustResponse.code !== 201) {
+    return NextResponse.json({
+        status: chageTrustResponse.status,
+        code: chageTrustResponse.code,
+        data: {
+            error: chageTrustResponse.data
+        },
+        message: {
+            message: chageTrustResponse.message,
+            message2: "error not 201"
+        }
+    });
+   }
+
 
 
 
     return NextResponse.json({
-        status: accountInfo.status,
-        code: accountInfo.code,
+        status: chageTrustResponse.status,
+        code: chageTrustResponse.code,
         data: {
-            accountInfo: accountInfo
-        
-        }
-    });
+            detail: chageTrustResponse.data.detail
+        },
+        message: chageTrustResponse.message
+       
+    })
+
 }

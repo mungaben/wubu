@@ -1,15 +1,16 @@
-import { getAccountInfo } from "@/Utils/Accounts/AccountsOperations";
+import { mergeAccounts } from "@/Utils/Accounts/AccountsOperations";
 import { Post_challenge_transaction } from "@/Utils/GetAccessToken";
+import { TMergePostTransactionResponse } from "@/Utils/TypesGenerated";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 
 
+export async function POST(req:NextRequest,res:NextResponse){
 
+    const body = await req.json()
 
-export  async function GET (req:NextRequest,res:NextResponse){
-   
-
+    const {destination, secret_key} = body
 
     const cookieStore = cookies()
     let token;
@@ -36,29 +37,14 @@ export  async function GET (req:NextRequest,res:NextResponse){
         })
     }
 
-    const accountInfo = await getAccountInfo(token);
-    if (accountInfo.code !== 200) {
-        return NextResponse.json({
-            status: accountInfo.status,
-            code: accountInfo.code,
-            data: {
-                error: accountInfo.data.error
-            },
-            message: {
-                message: accountInfo.message,
-                message2: "error not 200"
-            }
-        });
-    }
+
+
+    const MergeAccountResponse: TMergePostTransactionResponse = await mergeAccounts(token, destination, secret_key);
+
 
 
 
     return NextResponse.json({
-        status: accountInfo.status,
-        code: accountInfo.code,
-        data: {
-            accountInfo: accountInfo
-        
-        }
-    });
+        message:"hello world"
+    })
 }

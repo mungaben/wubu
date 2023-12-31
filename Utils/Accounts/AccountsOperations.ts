@@ -118,7 +118,7 @@ export const createAccount = async (token:string) => {
     // const CSRFToken = 'c4IOAkPsIOkbWGN2YIPY6W0wuiF1oGRT9XPPei9ckJaaOl5PdgGmuip5mcwOb8kJ';
     // const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2FwaS5iZW5raWtvLmlvL2F1dGgiLCJzdWIiOiJHQlNQRVBBT1pNNFE2NU1IT1M0WjVOS1k1NUhUWFpFRFFFVEtDUExFNEJDNFRCWVhGUlRaSVlTRiIsImlhdCI6MTcwMzc5NDA5NywiZXhwIjoxNzAzODgwNDk3LCJqdGkiOiJkYTBiNmZmYzg2NzY1OTMyZDdkNmYxZTVhMmRkYmQwNDVjODA2NTg5NDFkM2U2MjYxZDcwNTA2NGQ1NGZmNWJlIn0.UNVRI8ykH6HcfFzJUWzrHtqt_l10GNYP3u761LXNoJs';
     const data = {
-        username:  "postmantest364906",
+        username:  "postmantest364906123",
         mnemonic:  MnemonicComb.toString(),
         index: 0,
         language: "ENGLISH",
@@ -146,7 +146,7 @@ export async function getAccountInfo(token:string) {
     if (!token) {
         throw new Error("ACCESS_TOKEN is not set ");
     }
-    const url = `https://staging.api.benkiko.io/v1/account-info?account_id=${CLIENT_ACCOUNT}`;
+    const url = `${BENKIKO_BASE}/v1/account-info?account_id=${CLIENT_ACCOUNT}`;
     const headers = {
         'accept': 'application/json',
         'Authorization': `Bearer ${token}`,
@@ -159,4 +159,57 @@ export async function getAccountInfo(token:string) {
         return error;
     }
 }
+
+
+// merge accounts
+
+
+export async function mergeAccounts(destination:string, secret_key:string, token:string) {
+    const url = `${BENKIKO_BASE}/v1/account-merge`;
+    const headers = {
+        'accept': 'application/json',
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        // 'X-CSRFTOKEN': 'XQBWrKwdjM4ggHS8ovija3wA0RAe6W3eUJIX5IQXVHUf8maVD39HypV9SLr1Tow4'
+    };
+    const data = {
+        "destination": `${destination}`,
+        "secret_key": `${secret_key}`
+    };
+
+    try {
+        const response: AxiosResponse = await axios.post(url, data, { headers });
+        return response.data;
+    } catch (error) {
+        return error;
+    }
+}
+
+
+
+
+export async function changeTrust( token:string, asset_code:string, limit:string, secret_key:string) {
+    const url = `${BENKIKO_BASE}/v1/change-trust`;
+    const headers = {
+        'accept': 'application/json',
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        // 'X-CSRFTOKEN': 'XQBWrKwdjM4ggHS8ovija3wA0RAe6W3eUJIX5IQXVHUf8maVD39HypV9SLr1Tow4'
+    };
+    const data = {
+        "asset_code": `${asset_code}`,
+        "limit": `${limit}`,
+        "secret_key": `${secret_key}`
+    };
+
+    try {
+        const response: AxiosResponse = await axios.post(url, data, { headers });
+        return response.data;
+    } catch (error) {
+        return error;
+    }
+}
+
+
+
 
