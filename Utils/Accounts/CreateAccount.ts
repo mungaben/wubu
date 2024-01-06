@@ -13,34 +13,34 @@ let data = JSON.stringify({
 
 
 export const CreateStellarAccount = async (clientAccount: string) => {
-    const config = {
-        method: "post",
-        maxBodyLength: Infinity,
-        url: `https://api.benkiko.io/v1/auth/challenge?client_account=${clientAccount}&home_domain=benkiko.io`,
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + process.env.ACCESS_TOKEN
-          },
-          data : data
-    };
-    
-    return axios
-        .request(config)
-        .then((response:any) => {
-        const responseData: ApiResponse = response.data;
-    
-        return {
-            status: responseData.status,
-            code: responseData.code,
-            data: {
-            transaction: responseData.data.transaction,
-            network_passphrase: responseData.data.network_passphrase,
-            },
-            message: responseData.message,
-        };
-        })
-        .catch((error: any) => {
-        console.log("response error", error);
-        throw error; // Propagate the error so it can be caught in the calling function
-        });
+  const config = {
+    method: "post",
+    maxBodyLength: Infinity,
+    url: `https://api.benkiko.io/v1/auth/challenge?client_account=${clientAccount}&home_domain=benkiko.io`,
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + process.env.ACCESS_TOKEN
+    },
+    data: data
+  };
+
+  return axios
+    .request(config)
+    .then((response: any) => {
+      const responseData: ApiResponse = response.data;
+
+      return {
+        status: responseData.status,
+        code: responseData.code,
+        data: {
+          transaction: responseData.data.transaction,
+          network_passphrase: responseData.data.network_passphrase,
+        },
+        message: responseData.message,
+      };
+    })
+    .catch((error: any) => {
+      console.log("response error", error);
+      throw error; // Propagate the error so it can be caught in the calling function
+    });
 }

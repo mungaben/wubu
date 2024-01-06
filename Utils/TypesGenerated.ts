@@ -87,3 +87,14 @@ export type TMergePostTransactionResponse = {
     };
     message: string;
 };
+
+export type  TDepositInteractiveResponse ={
+    status: string;
+    code: number;
+    data: {
+        type: string;
+        url: string;
+        id: string;
+    };
+    message: string;
+}

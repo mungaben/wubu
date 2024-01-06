@@ -4,7 +4,7 @@
 import { cookies } from "next/headers";
 import { Post_challenge_transaction } from "../GetAccessToken";
 
-export let  ACCESS_TOKEN: string;
+export let ACCESS_TOKEN: string;
 
 export const getAccessToken = async () => {
   const Post_TTransaction = await Post_challenge_transaction();
@@ -21,7 +21,7 @@ export const getAccessToken = async () => {
 
   if (septokenCookie) {
     ACCESS_TOKEN = septokenCookie.value;
-  }else{
+  } else {
 
     cookieStore.set("septoken", token, {
       httpOnly: true,
@@ -34,7 +34,7 @@ export const getAccessToken = async () => {
 
   }
 
-  
+
 
 
 }

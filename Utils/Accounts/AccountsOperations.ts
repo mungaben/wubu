@@ -1,7 +1,7 @@
 // Create stellar account
 
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { BENKIKO_BASE, HOME_DOMAIN,BENKIKO_BASE_LIVE,CLIENT_ACCOUNT } from "../GetAccessToken";
+import { BENKIKO_BASE, HOME_DOMAIN, BENKIKO_BASE_LIVE, CLIENT_ACCOUNT, SIGNING_SEED, TEST_ANCHOR_DOMAIN } from "../GetAccessToken";
 import { generateMnemonic } from "./Generatemnemonic";
 
 
@@ -51,19 +51,19 @@ export type ResponseType = {
 
 
 
-export const Create_stellar_account = async (ACCESS_TOKEN:string) => {
+export const Create_stellar_account = async (ACCESS_TOKEN: string) => {
     if (!ACCESS_TOKEN) {
         throw new Error("ACCESS_TOKEN is not set ");
     }
 
-    const MnemonicComb= generateMnemonic();
+    const MnemonicComb = generateMnemonic();
     // console.log('====================================');
     // console.log('MnemonicComb', MnemonicComb);
     // console.log('====================================');
     if (!MnemonicComb) {
         throw new Error("MnemonicComb is not set ");
     }
- 
+
     const CreateAccount = axios
         .post(
             `${BENKIKO_BASE}/v1/account`,
@@ -109,17 +109,17 @@ export const Create_stellar_account = async (ACCESS_TOKEN:string) => {
 // "energy swift machine ivory wall giant affair stomach impose elder drive bicycle enroll garment wagon hurdle angry pause resource forest young odor life pepper",
 
 
-export const createAccount = async (token:string) => {
-    const MnemonicComb= await  generateMnemonic();
+export const createAccount = async (token: string) => {
+    const MnemonicComb = await generateMnemonic();
     console.log('====================================');
-    console.log(typeof MnemonicComb, MnemonicComb ,BENKIKO_BASE);
+    console.log(typeof MnemonicComb, MnemonicComb, BENKIKO_BASE);
     console.log('====================================');
     const url = `${BENKIKO_BASE}/v1/account`;
     // const CSRFToken = 'c4IOAkPsIOkbWGN2YIPY6W0wuiF1oGRT9XPPei9ckJaaOl5PdgGmuip5mcwOb8kJ';
     // const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2FwaS5iZW5raWtvLmlvL2F1dGgiLCJzdWIiOiJHQlNQRVBBT1pNNFE2NU1IT1M0WjVOS1k1NUhUWFpFRFFFVEtDUExFNEJDNFRCWVhGUlRaSVlTRiIsImlhdCI6MTcwMzc5NDA5NywiZXhwIjoxNzAzODgwNDk3LCJqdGkiOiJkYTBiNmZmYzg2NzY1OTMyZDdkNmYxZTVhMmRkYmQwNDVjODA2NTg5NDFkM2U2MjYxZDcwNTA2NGQ1NGZmNWJlIn0.UNVRI8ykH6HcfFzJUWzrHtqt_l10GNYP3u761LXNoJs';
     const data = {
-        username:  "postmantest364906123",
-        mnemonic:  MnemonicComb.toString(),
+        username: "postmantest364906123",
+        mnemonic: MnemonicComb.toString(),
         index: 0,
         language: "ENGLISH",
         home_domain: "benkiko.io"
@@ -133,7 +133,7 @@ export const createAccount = async (token:string) => {
     try {
         const response: AxiosResponse = await axios.post(url, data, { headers });
         // console.log(response.data);
-        return response.data;   
+        return response.data;
     } catch (error) {
         // console.error(error);
         return error;
@@ -142,7 +142,7 @@ export const createAccount = async (token:string) => {
 
 
 
-export async function getAccountInfo(token:string) {
+export async function getAccountInfo(token: string) {
     if (!token) {
         throw new Error("ACCESS_TOKEN is not set ");
     }
@@ -164,7 +164,7 @@ export async function getAccountInfo(token:string) {
 // merge accounts
 
 
-export async function mergeAccounts(destination:string, secret_key:string, token:string) {
+export async function mergeAccounts(destination: string, secret_key: string, token: string) {
     const url = `${BENKIKO_BASE}/v1/account-merge`;
     const headers = {
         'accept': 'application/json',
@@ -188,7 +188,7 @@ export async function mergeAccounts(destination:string, secret_key:string, token
 
 
 
-export async function changeTrust( token:string, asset_code:string, limit:string, secret_key:string) {
+export async function changeTrust(token: string, asset_code: string, limit: string, secret_key: string) {
     const url = `${BENKIKO_BASE}/v1/change-trust`;
     const headers = {
         'accept': 'application/json',
@@ -209,6 +209,125 @@ export async function changeTrust( token:string, asset_code:string, limit:string
         return error;
     }
 }
+
+// export async function getDepositInteractive(token:string) {
+//     const url = 'https://staging.api.benkiko.io/v1/transactions/deposit/interactive';
+//     const params = {
+//         asset_code: 'USDB',
+//         domain: 'testanchor.stellar.org',
+//         secret_key: 'gAAAAABkVMwqYQdZVUQBwK5uNUeUgp2T8CYb4IvK7NwA7fiHZfgxFAiia-DP3-UiJm2J_Lksxa8EjFh3m-Q-3OTiyI-Ik8EIthz6mijIQVvKORPNl6X0ZwCicl8B7WY9MAFq2J1Wqd8phbmmV7gamzW-uzyoyGddkg%3D%3D'
+//     };
+//     const headers = {
+//         'accept': 'application/json',
+//         'Authorization': "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2FwaS5iZW5raWtvLmlvL2F1dGgiLCJzdWIiOiJHQlNQRVBBT1pNNFE2NU1IT1M0WjVOS1k1NUhUWFpFRFFFVEtDUExFNEJDNFRCWVhGUlRaSVlTRiIsImlhdCI6MTcwNDE5MDg3MiwiZXhwIjoxNzA0Mjc3MjcyLCJqdGkiOiI1YTYwNWM3ZTAxMDJiZmYxNTA4NjBhMGFlYzQ1YTk0ZjM4YzFlNWNiYTI1OTczMTFhZjIzYjU5MzBhOGE3ZDQ0In0.av66fDcv0jH5r-9zVhlyw_oL-Rkm8jhjCZMWOruYXTs",
+//     };
+
+//     try {
+//         const response: AxiosResponse = await axios.get(url, { params, headers });
+//         console.log('====================================');
+//         console.log('response', response.data);
+//         console.log('====================================');
+//         return response.data;
+//     } catch (error:any) {
+//         console.log('====================================');
+//         console.log('error', error?.response?.data);
+//         console.log('====================================');
+
+
+
+//         return error;
+//     }
+// }
+
+export async function getDepositInteractive(token: string) {
+    const url = 'https://staging.api.benkiko.io/v1/transactions/deposit/interactive';
+    const params = {
+        asset_code: 'ETH',
+        domain: 'testanchor.stellar.org',
+        secret_key: 'gAAAAABkVMwqYQdZVUQBwK5uNUeUgp2T8CYb4IvK7NwA7fiHZfgxFAiia-DP3-UiJm2J_Lksxa8EjFh3m-Q-3OTiyI-Ik8EIthz6mijIQVvKORPNl6X0ZwCicl8B7WY9MAFq2J1Wqd8phbmmV7gamzW-uzyoyGddkg%3D%3D'
+    };
+    const headers = {
+        'accept': 'application/json',
+        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2FwaS5iZW5raWtvLmlvL2F1dGgiLCJzdWIiOiJHQlNQRVBBT1pNNFE2NU1IT1M0WjVOS1k1NUhUWFpFRFFFVEtDUExFNEJDNFRCWVhGUlRaSVlTRiIsImlhdCI6MTcwNDE5MDg3MiwiZXhwIjoxNzA0Mjc3MjcyLCJqdGkiOiI1YTYwNWM3ZTAxMDJiZmYxNTA4NjBhMGFlYzQ1YTk0ZjM4YzFlNWNiYTI1OTczMTFhZjIzYjU5MzBhOGE3ZDQ0In0.av66fDcv0jH5r-9zVhlyw_oL-Rkm8jhjCZMWOruYXTs'
+    };
+
+    try {
+        const response = await axios.get(url, { params, headers });
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+
+
+
+
+// export async function getDepositInteractive(token:string) {
+//     const url = `${HOME_DOMAIN}/v1/transactions/deposit/interactive`;
+//     const params = {
+//         asset_code: 'USDC',
+//         domain: `${TEST_ANCHOR_DOMAIN}`,
+//         secret_key: `${SIGNING_SEED}`
+//     };
+//     const headers = {
+//         'accept': 'application/json',
+//         'Authorization': `Bearer ${token}`,
+//     };
+
+//     try {
+//         const response: AxiosResponse = await axios.get(url, { params, headers });
+//         return response.data;
+//     } catch (error) {
+//         return error;
+//     }
+// }
+
+
+// export async function getDepositInteractiveLive(token: string) {
+//     const url = 'https://staging.api.benkiko.io/v1/transactions/deposit/interactive';
+//     const params = {
+//         asset_code: 'USDC',
+//         domain: `${TEST_ANCHOR_DOMAIN}`,
+//         secret_key: `${SIGNING_SEED}`
+//     };
+//     const headers = {
+//         'accept': 'application/json',
+//         'Authorization': `Bearer ${token}`,
+//     };
+
+//     try {
+//         const response = await axios.get(url, { params, headers });
+//         return response.data;
+//     } catch (error) {
+//         if (axios.isAxiosError(error)) {
+//             // Log the error message and the response from the server
+//             console.error('Axios error: ', error.message);
+//             console.error('Server response: ', error.response?.data);
+
+//             // Return a structured error response
+//             return {
+//                 error: true,
+//                 message: error.message,
+//                 data: error.response?.data
+//             };
+//         } else {
+//             // Log the error message and stack trace
+//             console.error('Unexpected error: ', error.message);
+//             console.error(error.stack);
+
+//             // Return a structured error response
+//             return {
+//                 error: true,
+//                 message: error.message,
+//                 data: null
+//             };
+//         }
+//     }
+// }
+
+
+
 
 
 

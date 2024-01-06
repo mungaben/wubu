@@ -11,9 +11,13 @@ export const HOME_DOMAIN = process.env.HOME_DOMAIN!;
 export const SIGNING_SEED = process.env.CLIENT_ACCOUNT_SIGNING_SEED!;
 export const BENKIKO_BASE = process.env.BENKIKO_BASE!;
 export const BENKIKO_BASE_LIVE = process.env.BENKIKO_BASE_LIVE!;
+export const TEST_ANCHOR_DOMAIN = process.env.TEST_ANCHOR_DOMAIN!;
 
 if (!SIGNING_SEED) {
   throw new Error("Client_account_signing_seed is not set in the .env file");
+}
+if (!TEST_ANCHOR_DOMAIN) {
+  throw new Error("TEST_ANCHOR_DOMAIN is not set in the .env file");
 }
 
 if (!CLIENT_ACCOUNT) {
@@ -87,7 +91,7 @@ export const Get_challenge_transaction = async () => {
       `${BENKIKO_BASE}/v1/auth/challenge?client_account=${CLIENT_ACCOUNT}&home_domain=benkiko.io`
     )
     .then((response: GetTransactionResponse) => {
-    
+
       return response.data;
     })
     .catch((error: any) => {
