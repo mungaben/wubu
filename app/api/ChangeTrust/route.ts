@@ -42,22 +42,22 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
 
 
-   const chageTrustResponse= await changeTrust(token, asset_code, limit, secret_key);
+    const chageTrustResponse = await changeTrust(token, asset_code, limit, secret_key);
 
 
-   if (chageTrustResponse.code !== 201) {
-    return NextResponse.json({
-        status: chageTrustResponse.status,
-        code: chageTrustResponse.code,
-        data: {
-            error: chageTrustResponse.data
-        },
-        message: {
-            message: chageTrustResponse.message,
-            message2: "error not 201"
-        }
-    });
-   }
+    if (chageTrustResponse.code !== 201) {
+        return NextResponse.json({
+            status: chageTrustResponse.status,
+            code: chageTrustResponse.code,
+            data: {
+                error: chageTrustResponse.data
+            },
+            message: {
+                message: chageTrustResponse.message,
+                message2: "error not 201"
+            }
+        });
+    }
 
 
 
@@ -69,7 +69,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
             detail: chageTrustResponse.data.detail
         },
         message: chageTrustResponse.message
-       
+
     })
 
 }
