@@ -6,11 +6,11 @@ import { NextRequest, NextResponse } from "next/server";
 
 
 
-export async function POST(req:NextRequest,res:NextResponse){
+export async function POST(req: NextRequest, res: NextResponse) {
 
     const body = await req.json()
 
-    const {destination, secret_key} = body
+    const { destination, secret_key } = body
 
     const cookieStore = cookies()
     let token;
@@ -45,6 +45,6 @@ export async function POST(req:NextRequest,res:NextResponse){
 
 
     return NextResponse.json({
-        message:"hello world"
+        message: "hello world"
     })
 }

@@ -51,7 +51,7 @@ export type ResponseType = {
 
 
 
-export const Create_stellar_account = async (ACCESS_TOKEN: string) => {
+export const Create_stellar_account = async (ACCESS_TOKEN: string,username:string) => {
     if (!ACCESS_TOKEN) {
         throw new Error("ACCESS_TOKEN is not set ");
     }
@@ -68,7 +68,7 @@ export const Create_stellar_account = async (ACCESS_TOKEN: string) => {
         .post(
             `${BENKIKO_BASE}/v1/account`,
             {
-                username: "ken",
+                username: `${username}`,
                 mnemonic: MnemonicComb,
                 language: "ENGLISH",
                 home_domain: "benkiko.io",

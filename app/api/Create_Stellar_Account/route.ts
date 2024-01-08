@@ -8,7 +8,8 @@ import { NextRequest, NextResponse } from "next/server";
 
 
 
-export async function GET(res: NextRequest, req: NextResponse) {
+export async function POST(res: NextRequest, req: NextResponse) {
+
 
 
     // get acess token from cookies
@@ -32,7 +33,7 @@ export async function GET(res: NextRequest, req: NextResponse) {
     }
 
     // create stellar account
-    const Create_Stellar_Account = await Create_stellar_account(token);
+    const Create_Stellar_Account = await Create_stellar_account(token, "GAB4");
    
 
     return NextResponse.json({
