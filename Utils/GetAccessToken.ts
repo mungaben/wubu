@@ -12,6 +12,7 @@ export const SIGNING_SEED = process.env.CLIENT_ACCOUNT_SIGNING_SEED!;
 export const BENKIKO_BASE = process.env.BENKIKO_BASE!;
 export const BENKIKO_BASE_LIVE = process.env.BENKIKO_BASE_LIVE!;
 export const TEST_ANCHOR_DOMAIN = process.env.TEST_ANCHOR_DOMAIN!;
+export const NEXT_PUBLIC_FIREBASE_DATABASE_URL = process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL!;
 
 if (!SIGNING_SEED) {
   throw new Error("Client_account_signing_seed is not set in the .env file");
@@ -28,6 +29,9 @@ if (!HOME_DOMAIN) {
 }
 if (!BENKIKO_BASE) {
   throw new Error("benkiko_base is not set in the .env file");
+}
+if (!BENKIKO_BASE_LIVE) {
+  throw new Error("benkiko_base_live is not set in the .env file");
 }
 
 export type GetTransactionResponse = {

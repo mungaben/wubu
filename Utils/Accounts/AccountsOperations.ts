@@ -51,7 +51,7 @@ export type ResponseType = {
 
 
 
-export const Create_stellar_account = async (ACCESS_TOKEN: string,username:string) => {
+export const Create_stellar_account = async (ACCESS_TOKEN: string, username: string) => {
     if (!ACCESS_TOKEN) {
         throw new Error("ACCESS_TOKEN is not set ");
     }
@@ -63,12 +63,13 @@ export const Create_stellar_account = async (ACCESS_TOKEN: string,username:strin
     if (!MnemonicComb) {
         throw new Error("MnemonicComb is not set ");
     }
+    // ${Math.floor(Math.random() * 100000000) + 1}
 
     const CreateAccount = axios
         .post(
             `${BENKIKO_BASE}/v1/account`,
             {
-                username: `${username}`,
+                username: `username01`,
                 mnemonic: MnemonicComb,
                 language: "ENGLISH",
                 home_domain: "benkiko.io",
@@ -111,14 +112,14 @@ export const Create_stellar_account = async (ACCESS_TOKEN: string,username:strin
 
 export const createAccount = async (token: string) => {
     const MnemonicComb = await generateMnemonic();
-    console.log('====================================');
-    console.log(typeof MnemonicComb, MnemonicComb, BENKIKO_BASE);
-    console.log('====================================');
+   
     const url = `${BENKIKO_BASE}/v1/account`;
     // const CSRFToken = 'c4IOAkPsIOkbWGN2YIPY6W0wuiF1oGRT9XPPei9ckJaaOl5PdgGmuip5mcwOb8kJ';
     // const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2FwaS5iZW5raWtvLmlvL2F1dGgiLCJzdWIiOiJHQlNQRVBBT1pNNFE2NU1IT1M0WjVOS1k1NUhUWFpFRFFFVEtDUExFNEJDNFRCWVhGUlRaSVlTRiIsImlhdCI6MTcwMzc5NDA5NywiZXhwIjoxNzAzODgwNDk3LCJqdGkiOiJkYTBiNmZmYzg2NzY1OTMyZDdkNmYxZTVhMmRkYmQwNDVjODA2NTg5NDFkM2U2MjYxZDcwNTA2NGQ1NGZmNWJlIn0.UNVRI8ykH6HcfFzJUWzrHtqt_l10GNYP3u761LXNoJs';
+    const name = `username01${Math.floor(Math.random() * 100000000) + 1}}`
     const data = {
-        username: "postmantest364906123",
+        // username: `username01${Math.floor(Math.random() * 100000000) + 1}}`,
+        username: name,
         mnemonic: MnemonicComb.toString(),
         index: 0,
         language: "ENGLISH",
@@ -132,7 +133,7 @@ export const createAccount = async (token: string) => {
 
     try {
         const response: AxiosResponse = await axios.post(url, data, { headers });
-        // console.log(response.data);
+        console.log(response.data);
         return response.data;
     } catch (error) {
         // console.error(error);

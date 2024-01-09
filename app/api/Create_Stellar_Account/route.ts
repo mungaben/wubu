@@ -8,7 +8,10 @@ import { NextRequest, NextResponse } from "next/server";
 
 
 
-export async function POST(res: NextRequest, req: NextResponse) {
+export async function GET(res: NextRequest, req: NextResponse) {
+    // const body = await res.json()
+
+    // const { username} = body
 
 
 
@@ -33,7 +36,26 @@ export async function POST(res: NextRequest, req: NextResponse) {
     }
 
     // create stellar account
-    const Create_Stellar_Account = await Create_stellar_account(token, "GAB4");
+    const Create_Stellar_Account = await Create_stellar_account(token, "test0");
+
+
+    if (Create_Stellar_Account?.code!== 201) {
+        return NextResponse.json({
+            status: Create_Stellar_Account?.status,
+            code: Create_Stellar_Account?.code,
+            data: {
+                error: Create_Stellar_Account?.data
+            },
+            message: {
+                message: Create_Stellar_Account?.message,
+                message2: "error not 200"
+            }
+        });
+    }
+
+    
+
+    
    
 
     return NextResponse.json({
