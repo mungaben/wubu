@@ -5,16 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 
 
-
-
-
 export async function GET(res: NextRequest, req: NextResponse) {
-    // const body = await res.json()
-
-    // const { username} = body
-
-
-
     // get acess token from cookies
     const cookieStore = cookies()
     let token;
@@ -48,7 +39,7 @@ export async function GET(res: NextRequest, req: NextResponse) {
             },
             message: {
                 message: Create_Stellar_Account?.message,
-                message2: "error not 200"
+                message2: "error creating stellar account"
             }
         });
     }
@@ -59,6 +50,17 @@ export async function GET(res: NextRequest, req: NextResponse) {
    
 
     return NextResponse.json({
-        message: 'hello'
+        
+        status: Create_Stellar_Account?.status,
+        code: Create_Stellar_Account?.code,
+        data: {
+            stellar_account: Create_Stellar_Account?.data
+        },
+        message: {
+            message: Create_Stellar_Account?.message,
+            message2: "Stellar account created successfully"
+        }
+
+
     })
 }

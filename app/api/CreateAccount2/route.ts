@@ -36,9 +36,9 @@ export async function GET(req: NextRequest, res: NextResponse) {
     }
 
     // log token
-    console.log('====================================');
-    console.log('token', typeof token, token);
-    console.log('====================================');
+    // console.log('====================================');
+    // console.log('token', typeof token, token);
+    // console.log('====================================');
 
 
 

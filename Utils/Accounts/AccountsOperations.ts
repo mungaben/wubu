@@ -57,9 +57,6 @@ export const Create_stellar_account = async (ACCESS_TOKEN: string, username: str
     }
 
     const MnemonicComb = generateMnemonic();
-    // console.log('====================================');
-    // console.log('MnemonicComb', MnemonicComb);
-    // console.log('====================================');
     if (!MnemonicComb) {
         throw new Error("MnemonicComb is not set ");
     }
@@ -81,9 +78,6 @@ export const Create_stellar_account = async (ACCESS_TOKEN: string, username: str
             }
         )
         .then((response: AxiosResponse<ResponseType>) => {
-            console.log('====================================');
-            console.log('response in', response);
-            console.log('====================================');
             return response.data as ResponseType;
         })
         .catch((error: any) => {
@@ -104,10 +98,6 @@ export const Create_stellar_account = async (ACCESS_TOKEN: string, username: str
     return CreateAccount;
 }
 
-
-
-
-// "energy swift machine ivory wall giant affair stomach impose elder drive bicycle enroll garment wagon hurdle angry pause resource forest young odor life pepper",
 
 
 export const createAccount = async (token: string) => {

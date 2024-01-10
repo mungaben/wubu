@@ -1,7 +1,8 @@
 import axios, { AxiosResponse } from 'axios';
+import { BENKIKO_BASE } from '../GetAccessToken';
 
 export const generateMnemonic = async () => {
-    const url = 'https://staging.api.benkiko.io/v1/generate-mnemonic';
+    const url =` ${BENKIKO_BASE}/v1/generate-mnemonic`;
     const CSRFToken = 'oUINOSN1zmEiQxMWYpjpIX4CqM1k7qOQlNPOsQ7LbhuhIc4JdXaN6jtbiGS7UShG';
     const data = {
         language: "ENGLISH",
@@ -21,4 +22,3 @@ export const generateMnemonic = async () => {
     }
 };
 
-generateMnemonic();
