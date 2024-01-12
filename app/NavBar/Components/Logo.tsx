@@ -3,7 +3,7 @@ import React from 'react'
 import Image from 'next/image'
 const Logo = () => {
   return (
-    <div >
+    <div className=' ml-5' >
         <Image
         src={'/Images/Benkikologo.jpg'}
         alt="Benkiko Logo"
