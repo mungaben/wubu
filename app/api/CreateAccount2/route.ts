@@ -35,14 +35,6 @@ export async function GET(req: NextRequest, res: NextResponse) {
         })
     }
 
-    // log token
-    // console.log('====================================');
-    // console.log('token', typeof token, token);
-    // console.log('====================================');
-
-
-
-
     const Response = await createAccount(token);
     if (Response.code !== 201) {
         return NextResponse.json({
@@ -57,9 +49,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
             }
         });
     }
-    console.log('====================================');
-    console.log('Response', Response);
-    console.log('====================================');
+    
     return NextResponse.json({
         status: Response.status,
         code: Response.code,

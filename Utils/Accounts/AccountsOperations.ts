@@ -3,21 +3,6 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { BENKIKO_BASE, HOME_DOMAIN, BENKIKO_BASE_LIVE, CLIENT_ACCOUNT, SIGNING_SEED, TEST_ANCHOR_DOMAIN } from "../GetAccessToken";
 import { generateMnemonic } from "./Generatemnemonic";
-
-
-
-
-
-
-
-
-// Create stellar account
-// This endpoint is used to generate a new keypair and create an account using the generated keypair.
-
-
-
-
-
 export type ErrorResponse = {
     status: string;
     code: number;
@@ -31,10 +16,6 @@ export type ErrorResponse = {
     };
     message: string;
 };
-
-
-
-
 
 export type ResponseType = {
     status: string;
@@ -104,11 +85,8 @@ export const createAccount = async (token: string) => {
     const MnemonicComb = await generateMnemonic();
    
     const url = `${BENKIKO_BASE}/v1/account`;
-    // const CSRFToken = 'c4IOAkPsIOkbWGN2YIPY6W0wuiF1oGRT9XPPei9ckJaaOl5PdgGmuip5mcwOb8kJ';
-    // const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2FwaS5iZW5raWtvLmlvL2F1dGgiLCJzdWIiOiJHQlNQRVBBT1pNNFE2NU1IT1M0WjVOS1k1NUhUWFpFRFFFVEtDUExFNEJDNFRCWVhGUlRaSVlTRiIsImlhdCI6MTcwMzc5NDA5NywiZXhwIjoxNzAzODgwNDk3LCJqdGkiOiJkYTBiNmZmYzg2NzY1OTMyZDdkNmYxZTVhMmRkYmQwNDVjODA2NTg5NDFkM2U2MjYxZDcwNTA2NGQ1NGZmNWJlIn0.UNVRI8ykH6HcfFzJUWzrHtqt_l10GNYP3u761LXNoJs';
     const name = `username01${Math.floor(Math.random() * 100000000) + 1}}`
     const data = {
-        // username: `username01${Math.floor(Math.random() * 100000000) + 1}}`,
         username: name,
         mnemonic: MnemonicComb.toString(),
         index: 0,

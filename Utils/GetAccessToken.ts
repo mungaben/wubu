@@ -151,13 +151,8 @@ export const Get_challenge_transaction_validation = async () => {
   if (Sign_Transaction_Response.code !== 200) {
     throw new Error("Sign challenge transaction failed");
   }
-
-
-
-
   return Sign_Transaction_Response.data.transaction;
 };
-
 
 export const Post_challenge_transaction = async () => {
   const SIGNED_XDR: string = await Get_challenge_transaction_validation();

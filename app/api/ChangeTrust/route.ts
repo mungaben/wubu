@@ -3,11 +3,6 @@ import { Post_challenge_transaction } from "@/Utils/GetAccessToken";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
-
-
-
-
-
 export async function POST(req: NextRequest, res: NextResponse) {
 
 
@@ -39,12 +34,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
             message: 'token not set'
         })
     }
-
-
-
     const chageTrustResponse = await changeTrust(token, asset_code, limit, secret_key);
-
-
     if (chageTrustResponse.code !== 201) {
         return NextResponse.json({
             status: chageTrustResponse.status,
@@ -58,10 +48,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
             }
         });
     }
-
-
-
-
     return NextResponse.json({
         status: chageTrustResponse.status,
         code: chageTrustResponse.code,

@@ -19,8 +19,6 @@ const Provider = ({ children }: Props) => {
     if (!mounted) {
         return <>{children}</>;
     }
-
-
     return (
         <ThemeProvider enableSystem={true} attribute='class'>
             {children}
