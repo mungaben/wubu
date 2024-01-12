@@ -2,10 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+
+/* rgb(207,184,41)   themecolor */
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  --themeColor-rgb: 207, 184, 41;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -24,4 +27,9 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+}
+
+/* themecolor */
+.theme-color {
+  color: rgb(var(--foreground-rgb));
 }
