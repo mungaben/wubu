@@ -179,3 +179,80 @@ export async function changeTrust(token: string, asset_code: string, limit: stri
     }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+export async function getDepositInteractive(token:string) {
+    const url = `${HOME_DOMAIN}/v1/transactions/deposit/interactive`;
+    const params = {
+        asset_code: 'USDC',
+        domain: `${TEST_ANCHOR_DOMAIN}`,
+        secret_key: `${SIGNING_SEED}`
+    };
+    const headers = {
+        'accept': 'application/json',
+        'Authorization': `Bearer ${token}`,
+    };
+
+    try {
+        const response: AxiosResponse = await axios.get(url, { params, headers });
+        return response.data;
+    } catch (error) {
+        return error;
+    }
+}
+
+
+export async function getDepositInteractiveLive(token: string) {
+    const url = 'https://staging.api.benkiko.io/v1/transactions/deposit/interactive';
+    const params = {
+        asset_code: 'USDC',
+        domain: `${TEST_ANCHOR_DOMAIN}`,
+        secret_key: `${SIGNING_SEED}`
+    };
+    const headers = {
+        'accept': 'application/json',
+        'Authorization': `Bearer ${token}`,
+    };
+
+    try {
+        const response = await axios.get(url, { params, headers });
+        return response.data;
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            // Log the error message and the response from the server
+            console.error('Axios error: ', error.message);
+            console.error('Server response: ', error.response?.data);
+
+            // Return a structured error response
+            return {
+                error: true,
+                message: error.message,
+                data: error.response?.data
+            };
+        } else {
+            // Log the error message and stack trace
+            console.error('Unexpected error: ', error);
+         
+
+            // Return a structured error response
+            return {
+                error: true,
+                message: error,
+                data: null
+            };
+        }
+    }
+}
+
+
+
