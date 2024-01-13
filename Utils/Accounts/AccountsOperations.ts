@@ -83,7 +83,7 @@ export const Create_stellar_account = async (ACCESS_TOKEN: string, username: str
 
 export const createAccount = async (token: string) => {
     const MnemonicComb = await generateMnemonic();
-   
+
     const url = `${BENKIKO_BASE}/v1/account`;
     const name = `username01${Math.floor(Math.random() * 100000000) + 1}}`
     const data = {
@@ -139,7 +139,7 @@ export async function mergeAccounts(destination: string, secret_key: string, tok
         'accept': 'application/json',
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
-        
+
     };
     const data = {
         "destination": `${destination}`,
@@ -163,7 +163,7 @@ export async function changeTrust(token: string, asset_code: string, limit: stri
         'accept': 'application/json',
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
-        
+
     };
     const data = {
         "asset_code": `${asset_code}`,
@@ -191,7 +191,7 @@ export async function changeTrust(token: string, asset_code: string, limit: stri
 
 
 
-export async function getDepositInteractive(token:string) {
+export async function getDepositInteractive(token: string) {
     const url = `${HOME_DOMAIN}/v1/transactions/deposit/interactive`;
     const params = {
         asset_code: 'USDC',
@@ -242,7 +242,7 @@ export async function getDepositInteractiveLive(token: string) {
         } else {
             // Log the error message and stack trace
             console.error('Unexpected error: ', error);
-         
+
 
             // Return a structured error response
             return {
