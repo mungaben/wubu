@@ -27,7 +27,7 @@ export default function RootLayout({
         <Provider>
           <div className='   '>
             <NavFull />
-            <main className="flex flex-col justify-center items-center flex-1 max-w-6xl w-full  ">
+            <main className=" ">
               {children}
             </main>
             <MobileNav />

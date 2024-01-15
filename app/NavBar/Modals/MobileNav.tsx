@@ -1,8 +1,6 @@
 
 
 "use client"
-
-
 import React from 'react'
 import {
   Sheet,
@@ -33,12 +31,8 @@ const MobileNav = () => {
   }
   return (
     <div className="   ">
-
-
       <Sheet open={IsOpen} onOpenChange={toggleNavModal}   >
-
         <SheetContent side="left" className=' min-h-screen  bg-blend-saturation  bg-background   '>
-
           <nav className=' '>
             <div className=' mt-2  gap-3 items-start flex flex-col   '>
               <div className=' flex flex-col  text-start justify-start gap-3 items-start '>

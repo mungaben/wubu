@@ -7,7 +7,6 @@ import { Menu } from "lucide-react"
 import { Zustandtorage } from '@/Store/ZuStore/Zustandtorage'
 import { ModeToggle } from '@/components/context/ToogleButton'
 import ThemeSwitcher from '@/components/context/ThemeSwitch'
-
 import { useScroll, useMotionValueEvent, motion } from "framer-motion"
 const NavFull = () => {
     const NavModal = Zustandtorage(state => state.toggleNavModal)
@@ -27,7 +26,6 @@ const NavFull = () => {
             setIsHidden(false);
         }
     });
-
     return (
         <motion.div variants={{
             hidden: { opacity: 0, y: -100, display: "none" },
@@ -36,24 +34,17 @@ const NavFull = () => {
             animate={isHidden ? "hidden" : "visible"}
             transition={{ duration: 0.5, ease: "easeInOut" }}
         >
-
-
             <div className=' mt-2  w-screen  items-center flex justify-between  '>
-
                 <Logo />
-
                 <div className=' md:flex hidden flex-row space-x-3 text-center justify-center items-center '>
                     <div>About</div>
                     <div>Features</div>
                     <div>Technomics</div>
-
                 </div>
-
                 <div className=' flex-row space-x-3 text-center items-center md:flex  hidden md:mr-5 '>
                     <div>
                         signup/login
                     </div>
-
                 </div>
                 <div className=' mr-5 flex items-center space-x-5   mx-5  '>
                     <div>
@@ -64,8 +55,6 @@ const NavFull = () => {
                     </Button>
                 </div>
             </div>
-
-
         </motion.div >
     )
 }
