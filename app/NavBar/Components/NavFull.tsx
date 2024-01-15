@@ -50,7 +50,7 @@ const NavFull = () => {
                     <div>
                         <ThemeSwitcher />
                     </div>
-                    <Button size="sm" onClick={openModal} className=' md:hidden    p-3 rounded-md'>
+                    <Button size="sm" onClick={openModal} className=' md:hidden dark:text-[#ffff]    p-3 rounded-md'>
                         <Menu size={20} className=' rounded-md' />
                     </Button>
                 </div>

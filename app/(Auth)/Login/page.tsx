@@ -2,11 +2,12 @@
 
 import React from 'react'
 import SignIn from './components/SignIn'
+import { LoginCard } from './components/LoginCard'
 
 const page = () => {
   return (
-    <div>
-        <SignIn/>
+    <div className=' flex jus'>
+      <LoginCard />
     </div>
   )
 }
