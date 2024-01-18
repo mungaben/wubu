@@ -7,8 +7,8 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest, res: NextResponse) {
 
-    const Response= await Get_challenge_transaction()
- 
+    const Response = await Get_challenge_transaction()
+
 
     if (Response.code !== 200) {
         return NextResponse.json({
@@ -25,8 +25,8 @@ export async function GET(req: NextRequest, res: NextResponse) {
         status: Response.status,
         code: Response.code,
         data: {
-          transaction: Response.data.transaction,
-          network_passphrase: Response.data.network_passphrase,
+            transaction: Response.data.transaction,
+            network_passphrase: Response.data.network_passphrase,
         },
         message: Response.message,
     })

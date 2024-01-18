@@ -7,8 +7,12 @@ import { NextRequest, NextResponse } from "next/server";
 
 
 
-export async function GET(req: NextRequest, res: NextResponse) {
+export async function POST(req: NextRequest, res: NextResponse) {
 
+    const body = await req.json()
+
+    // Destructure the request body to extract the necessary fields
+    const { username, MnemonicComb } = body;
 
     const cookieStore = cookies()
     let token;
@@ -19,6 +23,8 @@ export async function GET(req: NextRequest, res: NextResponse) {
 
     // If the token doesn't exist or is expired, get a new one
     if (!token) {
+        console.log("token not set");
+
         const Post_TTransaction = await Post_challenge_transaction();
         token = Post_TTransaction.data.token;
         cookieStore.set('septoken', token, {
@@ -35,7 +41,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
         })
     }
 
-    const Response = await createAccount(token);
+    const Response = await createAccount(token, username, MnemonicComb);
     if (Response.code !== 201) {
         return NextResponse.json({
             status: Response.status,
@@ -43,22 +49,19 @@ export async function GET(req: NextRequest, res: NextResponse) {
             data: {
                 error: Response.data.error
             },
-            message: {
-                message: Response.message,
-                message2: "error not 200"
-            }
+            message: Response.message
         });
     }
-    
+
     return NextResponse.json({
         status: Response.status,
         code: Response.code,
         data: {
-            'public key': Response.data['public key'],
+            public_key: Response.data['public key'],
             paymail: Response.data.paymail,
-            'secret key': Response.data['secret key'],
-            'muxed account': Response.data['muxed account'],
-            'muxed id': Response.data['muxed id']
+            secret_key: Response.data['secret key'],
+            muxed_account: Response.data['muxed account'],
+            muxed_id: Response.data['muxed id']
         },
         message: Response.message
     });

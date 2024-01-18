@@ -31,7 +31,7 @@ type CardProps = React.ComponentProps<typeof Card>
 
 export function LoginCard({ className, ...props }: CardProps) {
     return (
-        <Card className={cn("md:max-w-6xl ", className)} {...props}>
+        <Card className={cn("md:max-w-6xl dark:bg-foreground  h-3/4 ", className)} {...props}>
             <CardHeader>
                 <CardTitle>Notifications</CardTitle>
                 <CardDescription>You have 3 unread messages.</CardDescription>

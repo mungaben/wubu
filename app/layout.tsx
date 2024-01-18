@@ -22,11 +22,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${poppins}"min-h-screen mx-auto justify-center items-center overflow-hidden  flex flex-col bg-gray-100 
-          dark:bg-gray-900 `}>
+      <body className={`${poppins}"min-h-screen mx-auto justify-center items-center  no-scrollbar dark:text-foreground bg-white text-foreground leading-relaxed   flex flex-col dark:bg-[#0f0f0f] 
+           `}>
         <Provider>
           <div className='   '>
-            <NavFull />
+            <div className='w-full flex justify-center items-center'>
+              <NavFull />
+            </div>
             <main className=" ">
               {children}
             </main>

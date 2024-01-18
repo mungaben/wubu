@@ -81,11 +81,18 @@ export const Create_stellar_account = async (ACCESS_TOKEN: string, username: str
 
 
 
-export const createAccount = async (token: string) => {
-    const MnemonicComb = await generateMnemonic();
+export const createAccount = async (token: string,username:string,MnemonicComb:string) => {
+
+    console.log("token", token);
+    console.log("username", username);
+    console.log("MnemonicComb", MnemonicComb);
+    
+    
+    
+    // const MnemonicComb = await generateMnemonic();
 
     const url = `${BENKIKO_BASE}/v1/account`;
-    const name = `username01${Math.floor(Math.random() * 100000000) + 1}}`
+    const name = username;
     const data = {
         username: name,
         mnemonic: MnemonicComb.toString(),
@@ -93,6 +100,8 @@ export const createAccount = async (token: string) => {
         language: "ENGLISH",
         home_domain: "benkiko.io"
     };
+    console.log("data", data);
+    
     const headers = {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,

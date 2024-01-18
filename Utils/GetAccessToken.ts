@@ -89,6 +89,8 @@ export type PostTransactionErrorResponse = {
 };
 // Stellar Ecosystem Proposal (SEP-10)   authentication flow - get challenge transaction
 // challenge transaction  is sent to the server to be signed by the client account-signing seed
+
+// 1 auth challenge transaction
 export const Get_challenge_transaction = async () => {
   const GetTransaction = axios
     .get(
@@ -108,7 +110,7 @@ export const Get_challenge_transaction = async () => {
 // Sign challenge transaction
 // the function takes the challenge transaction and the client account-signing seed as part of sep 10 authentication flow and returns a signed challenge transaction
 // the signed challenge transaction is sent to the server to be verified and a token is returned in next step
-
+// 2 sign 
 export const Sign_challenge_transaction = async (TRANSACTION_XDR: string) => {
   const sign_transaction = axios
     .post(`${BENKIKO_BASE}/v1/auth/sign`, {
@@ -147,13 +149,14 @@ export const Get_challenge_transaction_validation = async () => {
   const Sign_Transaction_Response = await Sign_challenge_transaction(
     Transaction_XDR.data.transaction
   );
-
   if (Sign_Transaction_Response.code !== 200) {
     throw new Error("Sign challenge transaction failed");
   }
   return Sign_Transaction_Response.data.transaction;
 };
 
+// get signed trsaction xdr and send it to the server to be verified
+// 3 token
 export const Post_challenge_transaction = async () => {
   const SIGNED_XDR: string = await Get_challenge_transaction_validation();
   if (!SIGNED_XDR) {
@@ -169,6 +172,8 @@ export const Post_challenge_transaction = async () => {
     const response = await axios.post(`${BENKIKO_BASE}/v1/auth/token`, {
       signed_challenge_transaction_xdr: SIGNED_XDR,
     });
+    console.log("response", response.data);
+
     return response.data as PostTransactionResponse;
   } catch (error: any) {
     if (error.response) {

@@ -33,8 +33,9 @@ const NavFull = () => {
         }}
             animate={isHidden ? "hidden" : "visible"}
             transition={{ duration: 0.5, ease: "easeInOut" }}
+            className='  bg-[#ffff]  dark:bg-[#121212] w-full  fixed top-0 z-50  '
         >
-            <div className=' mt-2  w-screen  items-center flex justify-between  '>
+            <div className=' mt-2  w-screen min-w-full  items-center flex justify-between  '>
                 <Logo />
                 <div className=' md:flex hidden flex-row space-x-3 text-center justify-center items-center '>
                     <div>About</div>
