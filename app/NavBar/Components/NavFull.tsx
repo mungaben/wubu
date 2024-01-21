@@ -1,14 +1,13 @@
 
 "use client"
-import React, { useState } from 'react'
-import Logo from './Logo'
-import { Button } from '@/components/ui/button'
-import { Menu } from "lucide-react"
 import { Zustandtorage } from '@/Store/ZuStore/Zustandtorage'
-import { ModeToggle } from '@/components/context/ToogleButton'
 import ThemeSwitcher from '@/components/context/ThemeSwitch'
-import { useScroll, useMotionValueEvent, motion } from "framer-motion"
+import { Button } from '@/components/ui/button'
+import { motion, useMotionValueEvent, useScroll } from "framer-motion"
+import { Menu } from "lucide-react"
 import Link from 'next/link'
+import { useState } from 'react'
+import Logo from './Logo'
 const NavFull = () => {
     const NavModal = Zustandtorage(state => state.toggleNavModal)
     const openModal = () => {
@@ -46,7 +45,7 @@ const NavFull = () => {
                 <div className=' flex-row space-x-3 text-center items-center md:flex  hidden md:mr-5 '>
                     <div>
                         <Link href="/SignUp">
-                        sign in/login
+                            create account
                         </Link>
                     </div>
                 </div>
