@@ -4,6 +4,7 @@ import './globals.css'
 import NavFull from './NavBar/Components/NavFull'
 import MobileNav from './NavBar/Modals/MobileNav'
 import Provider from '@/components/context/Provider'
+import { Toaster } from 'react-hot-toast'
 const inter = Inter({ subsets: ['latin'] })
 const poppins = Poppins({
   subsets: ['latin'],
@@ -22,14 +23,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${poppins}"min-h-screen mx-auto justify-center items-center  no-scrollbar dark:text-foreground bg-white text-foreground leading-relaxed   flex flex-col dark:bg-[#0f0f0f] 
-           `}>
+      <body className={`${poppins}"min-h-screen mx-auto justify-center items-center  no-scrollbar dark:text-foreground  text-foreground leading-relaxed   flex flex-col dark:bg-[#1D1E30] bg-[#FFFFFF] `}>
         <Provider>
-          <div className='   '>
+          <div className=' dark:bg-[#0c0c0c] bg-[#FFFFFF] w-full h-full   '>
             <div className='w-full flex justify-center items-center'>
               <NavFull />
             </div>
-            <main className=" ">
+            <main className="  ">
+            <Toaster position="bottom-right" />
               {children}
             </main>
             <MobileNav />

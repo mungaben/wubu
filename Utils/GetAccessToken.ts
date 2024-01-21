@@ -1,22 +1,19 @@
+import axios from "axios";
+import { SIGNING_SEED, TEST_ANCHOR_DOMAIN, CLIENT_ACCOUNT, HOME_DOMAIN, BENKIKO_BASE, BENKIKO_BASE_LIVE, SIGNING_SEED2 } from "./Env";
 
 
-const axios = require("axios");
+
 
 // Get challenge transaction
 
 // get Client Account
 
-export const CLIENT_ACCOUNT = process.env.CLIENT_ACCOUNT!;
-export const HOME_DOMAIN = process.env.HOME_DOMAIN!;
-export const SIGNING_SEED = process.env.CLIENT_ACCOUNT_SIGNING_SEED!;
-export const BENKIKO_BASE = process.env.BENKIKO_BASE!;
-export const BENKIKO_BASE_LIVE = process.env.BENKIKO_BASE_LIVE!;
-export const TEST_ANCHOR_DOMAIN = process.env.TEST_ANCHOR_DOMAIN!;
-export const NEXT_PUBLIC_FIREBASE_DATABASE_URL = process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL!;
+
 
 if (!SIGNING_SEED) {
   throw new Error("Client_account_signing_seed is not set in the .env file");
 }
+
 if (!TEST_ANCHOR_DOMAIN) {
   throw new Error("TEST_ANCHOR_DOMAIN is not set in the .env file");
 }
@@ -90,35 +87,58 @@ export type PostTransactionErrorResponse = {
 // Stellar Ecosystem Proposal (SEP-10)   authentication flow - get challenge transaction
 // challenge transaction  is sent to the server to be signed by the client account-signing seed
 
+const SIGNING_SEED_1 = process.env.CLIENT_ACCOUNT_SIGNING_SEED
+console.log("SIGNING_SEED", SIGNING_SEED);
+console.log("SIGNING_SEED", SIGNING_SEED_1);
+console.log("BENKIKO_BASE", process.env.BENKIKO_BASE);
+
+// Assuming CLIENT_ACCOUNT is defined somewhere
+console.log("CLIENT_ACCOUNT", CLIENT_ACCOUNT);
+
 // 1 auth challenge transaction
 export const Get_challenge_transaction = async () => {
-  const GetTransaction = axios
-    .get(
-      `${BENKIKO_BASE}/v1/auth/challenge?client_account=${CLIENT_ACCOUNT}&home_domain=benkiko.io`
-    )
-    .then((response: GetTransactionResponse) => {
+  try {
+    const response = await axios.get(
+      `${process.env.BENKIKO_BASE}/v1/auth/challenge?client_account=${CLIENT_ACCOUNT}&home_domain=benkiko.io`
+    );
+    return response.data;
+  } catch (error: any) {
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
 
-      return response.data;
-    })
-    .catch((error: any) => {
-      return error;
-    });
-
-  return GetTransaction;
+    } else if (error.request) {
+      // The request was made but no response was received
+      // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+      // http.ClientRequest in node.js
+      console.log(error.request);
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.log('Error', error.message);
+    }
+    console.log(error.config);
+    return error;
+  }
 };
-
 // Sign challenge transaction
 // the function takes the challenge transaction and the client account-signing seed as part of sep 10 authentication flow and returns a signed challenge transaction
 // the signed challenge transaction is sent to the server to be verified and a token is returned in next step
 // 2 sign 
+
 export const Sign_challenge_transaction = async (TRANSACTION_XDR: string) => {
+  console.log("TRANSACTION_XDR in xdr", TRANSACTION_XDR);
+  console.log("SIGNED_XDR in sign in  ", SIGNING_SEED_1);
+
+
   const sign_transaction = axios
-    .post(`${BENKIKO_BASE}/v1/auth/sign`, {
+    .post(`https://staging.api.benkiko.io/v1/auth/sign`, {
       challenge_transaction_xdr: TRANSACTION_XDR,
-      client_account_signing_seed: SIGNING_SEED, //the secret seed of the Stellar account that is being authenticated.
+      client_account_signing_seed: SIGNING_SEED_1, //the secret seed of the Stellar account that is being authenticated.
     })
-    .then((response: GetTransactionResponse) => {
+    .then((response) => {
       // if success return the signed challenge transaction
+      console.log("response from signing transaction", response.data);
+
       return response.data;
     })
     .catch((error: any) => {
@@ -141,6 +161,8 @@ export const Sign_challenge_transaction = async (TRANSACTION_XDR: string) => {
 
 export const Get_challenge_transaction_validation = async () => {
   const Transaction_XDR = await Get_challenge_transaction();
+  console.log("Transaction_XDR", Transaction_XDR);
+
 
   if (Transaction_XDR.code !== 200) {
     throw new Error("Get challenge transaction failed");
@@ -159,6 +181,8 @@ export const Get_challenge_transaction_validation = async () => {
 // 3 token
 export const Post_challenge_transaction = async () => {
   const SIGNED_XDR: string = await Get_challenge_transaction_validation();
+  console.log("SIGNED_XDR", SIGNED_XDR);
+
   if (!SIGNED_XDR) {
     throw new Error("Signed XDR is not set");
   }
@@ -169,10 +193,10 @@ export const Post_challenge_transaction = async () => {
   });
 
   try {
-    const response = await axios.post(`${BENKIKO_BASE}/v1/auth/token`, {
+    const response = await axios.post(`https://staging.api.benkiko.io/v1/auth/token`, {
       signed_challenge_transaction_xdr: SIGNED_XDR,
     });
-    console.log("response", response.data);
+    // console.log("response", response.data);
 
     return response.data as PostTransactionResponse;
   } catch (error: any) {

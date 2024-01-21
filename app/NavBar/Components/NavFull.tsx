@@ -8,6 +8,7 @@ import { Zustandtorage } from '@/Store/ZuStore/Zustandtorage'
 import { ModeToggle } from '@/components/context/ToogleButton'
 import ThemeSwitcher from '@/components/context/ThemeSwitch'
 import { useScroll, useMotionValueEvent, motion } from "framer-motion"
+import Link from 'next/link'
 const NavFull = () => {
     const NavModal = Zustandtorage(state => state.toggleNavModal)
     const openModal = () => {
@@ -44,7 +45,9 @@ const NavFull = () => {
                 </div>
                 <div className=' flex-row space-x-3 text-center items-center md:flex  hidden md:mr-5 '>
                     <div>
-                        signup/login
+                        <Link href="/SignUp">
+                        sign in/login
+                        </Link>
                     </div>
                 </div>
                 <div className=' mr-5 flex items-center space-x-5   mx-5  '>

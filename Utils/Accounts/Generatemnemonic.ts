@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
-import { BENKIKO_BASE } from '../GetAccessToken';
+import { BENKIKO_BASE } from '../Env';
+
 
 export const generateMnemonic = async () => {
     const url =` ${BENKIKO_BASE}/v1/generate-mnemonic`;

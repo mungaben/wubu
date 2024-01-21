@@ -9,7 +9,7 @@ const Welcome = () => {
             <h1 className={` text-center subpixel-antialiased md:text-8xl text-xl font-bold text-yellow-400`}>
                 Benkiko DAO
             </h1>
-            <LinkRedirect link={'/Deposit'} name={'Deposit'}   />
+            <LinkRedirect link={'/Deposit'} name={'Deposit'} />
         </div>
     )
 }

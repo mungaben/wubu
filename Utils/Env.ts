@@ -1,0 +1,15 @@
+export const CLIENT_ACCOUNT = process.env.NEXT_PUBLIC_CLIENT_ACCOUNT
+export const CLIENT_ACCOUNT2 = process.env.CLIENT_ACCOUNT2
+export const HOME_DOMAIN = process.env.NEXT_PUBLIC_HOME_DOMAIN;
+export const HOME_DOMAIN2 = process.env.HOME_DOMAIN2;
+export const SIGNING_SEED = process.env.NEXT_PUBLIC_CLIENT_ACCOUNT_SIGNING_SEED;
+// export const SIGNING_SEED2 = process.env.CLIENT_ACCOUNT_SIGNING_SEED;
+
+export const SIGNING_SEED2 = process.env.CLIENT_ACCOUNT_SIGNING_SEED;
+export const BENKIKO_BASE = process.env.NEXT_PUBLIC_BENKIKO_BASE;
+export const BENKIKO_BASE2 = process.env.BENKIKO_BASE2;
+export const BENKIKO_BASE_LIVE = process.env.NEXT_PUBLIC_BENKIKO_BASE_LIVE;
+export const BENKIKO_BASE_LIVE2 = process.env.BENKIKO_BASE_LIVE2;
+export const TEST_ANCHOR_DOMAIN = process.env.NEXT_PUBLIC_TEST_ANCHOR_DOMAIN!;
+export const TEST_ANCHOR_DOMAIN2 = process.env.TEST_ANCHOR_DOMAIN2!;
+export const NEXT_PUBLIC_FIREBASE_DATABASE_URL = process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL!;
