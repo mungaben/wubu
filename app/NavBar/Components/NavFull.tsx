@@ -1,13 +1,13 @@
 
 "use client"
-import React, { useState } from 'react'
-import Logo from './Logo'
-import { Button } from '@/components/ui/button'
-import { Menu } from "lucide-react"
 import { Zustandtorage } from '@/Store/ZuStore/Zustandtorage'
-import { ModeToggle } from '@/components/context/ToogleButton'
 import ThemeSwitcher from '@/components/context/ThemeSwitch'
-import { useScroll, useMotionValueEvent, motion } from "framer-motion"
+import { Button } from '@/components/ui/button'
+import { motion, useMotionValueEvent, useScroll } from "framer-motion"
+import { Menu } from "lucide-react"
+import Link from 'next/link'
+import { useState } from 'react'
+import Logo from './Logo'
 const NavFull = () => {
     const NavModal = Zustandtorage(state => state.toggleNavModal)
     const openModal = () => {
@@ -33,8 +33,9 @@ const NavFull = () => {
         }}
             animate={isHidden ? "hidden" : "visible"}
             transition={{ duration: 0.5, ease: "easeInOut" }}
+            className='  bg-[#ffff]  dark:bg-[#121212] w-full  fixed top-0 z-50  '
         >
-            <div className=' mt-2  w-screen  items-center flex justify-between  '>
+            <div className=' mt-2  w-screen min-w-full  items-center flex justify-between  '>
                 <Logo />
                 <div className=' md:flex hidden flex-row space-x-3 text-center justify-center items-center '>
                     <div>About</div>
@@ -43,14 +44,16 @@ const NavFull = () => {
                 </div>
                 <div className=' flex-row space-x-3 text-center items-center md:flex  hidden md:mr-5 '>
                     <div>
-                        signup/login
+                        <Link href="/SignUp">
+                            create account
+                        </Link>
                     </div>
                 </div>
                 <div className=' mr-5 flex items-center space-x-5   mx-5  '>
                     <div>
                         <ThemeSwitcher />
                     </div>
-                    <Button size="sm" onClick={openModal} className=' md:hidden    p-3 rounded-md'>
+                    <Button size="sm" onClick={openModal} className=' md:hidden dark:text-[#ffff]    p-3 rounded-md'>
                         <Menu size={20} className=' rounded-md' />
                     </Button>
                 </div>

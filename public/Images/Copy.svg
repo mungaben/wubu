@@ -1,0 +1,9 @@
+<svg class="rough-annotation"
+    style="position: absolute; top: 0px; left: 0px; overflow: visible; pointer-events: none; width: 100px; height: 100px;">
+    <path
+        d="M14.396978053914884 271.6358441253774 C119.26639038602724 268.0823146639388, 224.63971696510973 270.9380687349015, 324.30126559304983 270.8145349098887"
+        fill="none" stroke="#bfbbaf" stroke-width="1"></path>
+    <path
+        d="M325.31352802000686 269.82086740212367 C259.71611911437503 271.59960427639584, 193.14353404564835 271.0976331666667, 15.889599051146565 270.79432197086857"
+        fill="none" stroke="#f0eee9" stroke-width="1"></path>
+</svg>

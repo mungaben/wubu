@@ -1,8 +1,9 @@
 // Create stellar account
 
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { BENKIKO_BASE, HOME_DOMAIN, BENKIKO_BASE_LIVE, CLIENT_ACCOUNT, SIGNING_SEED, TEST_ANCHOR_DOMAIN } from "../GetAccessToken";
+
 import { generateMnemonic } from "./Generatemnemonic";
+import { BENKIKO_BASE, CLIENT_ACCOUNT, HOME_DOMAIN, TEST_ANCHOR_DOMAIN, SIGNING_SEED } from "../Env";
 export type ErrorResponse = {
     status: string;
     code: number;
@@ -81,11 +82,21 @@ export const Create_stellar_account = async (ACCESS_TOKEN: string, username: str
 
 
 
-export const createAccount = async (token: string) => {
-    const MnemonicComb = await generateMnemonic();
+export const createAccount = async (token: string,username:string,MnemonicComb:string) => {
 
-    const url = `${BENKIKO_BASE}/v1/account`;
-    const name = `username01${Math.floor(Math.random() * 100000000) + 1}}`
+    console.log("token", token);
+    console.log("username", username);
+    console.log("MnemonicComb", MnemonicComb);
+    
+    
+    
+    // const MnemonicComb = await generateMnemonic();
+    if (!MnemonicComb) {
+        throw new Error("MnemonicComb is not set ");
+    }
+
+    const url = `https://staging.api.benkiko.io/v1/account`;
+    const name = username;
     const data = {
         username: name,
         mnemonic: MnemonicComb.toString(),
@@ -93,6 +104,8 @@ export const createAccount = async (token: string) => {
         language: "ENGLISH",
         home_domain: "benkiko.io"
     };
+    console.log("data", data);
+    
     const headers = {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,
@@ -101,11 +114,15 @@ export const createAccount = async (token: string) => {
 
     try {
         const response: AxiosResponse = await axios.post(url, data, { headers });
-        console.log(response.data);
+        console.log("create account response data ",response.data);
         return response.data;
-    } catch (error) {
-        // console.error(error);
-        return error;
+    }  catch (error:any) {
+        console.error("Error name: ", error.name);
+        console.error("Error message: ", error.message);
+        if (error.response) {
+            console.error("Server response: ", error.response.data);
+        }
+        return error.response.data;
     }
 };
 
